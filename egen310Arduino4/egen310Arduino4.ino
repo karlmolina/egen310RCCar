@@ -5,11 +5,16 @@
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
 Adafruit_DCMotor *motor1 = AFMS.getMotor(1); //right motor
-Adafruit_DCMotor *motor2 = AFMS.getMotor(2); //left
+Adafruit_DCMotor *motor2 = AFMS.getMotor(4); //left
 
 BluetoothSerial SerialBT;
 
+uint8_t count = 0;
+bool ledOn = false;
+
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+
   SerialBT.begin("Tiger");
   Serial.begin(9600);
 
@@ -31,7 +36,7 @@ void loop() {
 
     SerialBT.write(received);
   }
-  
+
   if (received == 'w') {
     motor1->run(FORWARD);
     motor2->run(FORWARD);
@@ -52,4 +57,15 @@ void loop() {
   }
 
   Serial.println(received);
+
+  count++;
+  
+  if (count == 0) {
+    ledOn = !ledOn;
+    if (ledOn) {
+      digitalWrite(LED_BUILTIN, HIGH);
+    } else {
+      digitalWrite(LED_BUILTIN, LOW);
+    }
+  }
 }

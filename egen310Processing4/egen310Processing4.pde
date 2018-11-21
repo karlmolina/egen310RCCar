@@ -26,17 +26,17 @@ void draw() {
   
   int rightVal = 0, leftVal = 0;
   if (forward) {
-    write = 'w';
+    write = 's';
     leftVal = rightVal = 1;
   } else if (backward) {
-    write = 's';
+    write = 'w';
     leftVal = rightVal = -1;
   } else if (left) {
-    write = 'a';
+    write = 'd';
     leftVal = -1;
     rightVal = 1;
   } else if (right) {
-    write = 'd';
+    write = 'a';
     leftVal = 1;
     rightVal = -1;
   } else {
@@ -98,8 +98,6 @@ void keyPressed() {
     left = true;
   } else if (key == 'd') {
     right = true;
-  } else if (key == '1' || key == '2' || key == '3' || key == '4') {
-    serial.write(key);
   }
 }
 
