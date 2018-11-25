@@ -9,7 +9,14 @@ int halfHeight, halfWidth;
 boolean forward, backward, left, right;
 
 void setup() {
-  serial = new Serial(this, portName, 9600);
+  try {
+    serial = new Serial(this, portName, 9600);
+  }
+  catch (Exception e )
+  {
+    println("Serial was not initialized");
+    //throw e;
+  }
 
   size(600, 600);
   strokeWeight(1);
@@ -23,7 +30,7 @@ int count = 0;
 void draw() {
   background(0);
   previousWrite = write;
-  
+
   int rightVal = 0, leftVal = 0;
   if (forward) {
     write = 'w';
@@ -43,50 +50,50 @@ void draw() {
     write = '0';
   }
 
-  serial.write(write);
-  char readChar = serial.readChar();
+  char readChar = '\0';
+  if (serial != null) {
+    serial.write(write);
+    readChar = serial.readChar();
+  }
   if (readChar == 'w' || readChar == 's') {
     count++;
   }
   println(readChar);
 
   background(0);
-  
   fill(255);
-  text(mouseX + ", " + mouseY, 10, 10);
   noStroke();
-  text("Input values", 40, 20);
-  text("Velocity", 220, 80);
-  text("Acceleration", 220, 140);
-  text("Bluetooth Status", 470, 20);
-  text("Debug Console", 20, 410);
+  
+  text(mouseX + ", " + mouseY, 10, 10);
+  text("Input values", 309, 195);
+  
   text("Distance Traveled", 220, 20);
-  text("Left", 60, 175);
-  text("Right", 110, 175);
-  text("Acceleration Graph", 400, 225);
-  text("Velocity Graph", 200, 225);
-  text("Car Gyro", 56, 225);
+  
+  text(count, 350, 41);
+  text("Left", 256, 553);
+  text("Right", 365, 557);
+  
+  text("Bluetooth Status", 483, 27);
   noFill();
   stroke(255);
-  rect(190, 250, 120, 120);
-  rect(40, 30, 120, 120);
-  rect(390, 250, 120, 120);
-  rect(30, 430, 539, 120);
+  // input values box
+  rect(194, 209, 282, 330);
+  
   if (previousWrite == readChar) {
     fill(0, 0, 255);
   } else {
     fill(255, 0, 0);
   }
-
-  rect(450, 31, 120, 140);
+  // bluetooth status box
+  rect(450, 50, 50, 50);
   noFill();
-  rect(30, 250, 120, 120);
-  rect(330, 20, 60, 30);
-  rect(330, 75, 60, 30);
-  rect(330, 130, 60, 30);
+  
+  // distance traveled box
+  rect(350, 20, 60, 30);
 
-  line (85, 90, 85, 90-leftVal*45);
-  line (120, 90, 120, 90-rightVal*42);
+  //left and right control values
+  line (249, 342, 245, 348-leftVal*178);
+  line (379, 370, 390, 357-rightVal*210);
 }
 void keyPressed() {
   forward = backward = left = right = false;
@@ -99,7 +106,9 @@ void keyPressed() {
   } else if (key == 'd') {
     right = true;
   } else if (key == '1' || key == '2' || key == '3' || key == '4') {
-    serial.write(key);
+    if (serial != null) {
+      serial.write(key);
+    }
   }
 }
 
