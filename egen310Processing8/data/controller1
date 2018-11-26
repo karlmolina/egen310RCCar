@@ -1,3 +1,0 @@
-control rc car
-power	moves the car	3	SLIDER	Y Axis	0	-1.0	0.05
-turn	turns the car	3	SLIDER	X Rotation	0	1.0	0.1

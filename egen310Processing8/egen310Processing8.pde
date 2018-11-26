@@ -16,7 +16,7 @@ int halfHeight,
   speedChange = 1, 
   LChange, 
   RChange, 
-  startSpeed = 25;
+  startSpeed = 40;
 final float TOP_SPEED = 255.0;
 final int SLOWEST_SPEED = 25;
 boolean stopped = true;
@@ -83,7 +83,7 @@ void draw() {
   left = constrain(left, -maxSpeed, maxSpeed);
   right = constrain(right, -maxSpeed, maxSpeed);
   background(0);
-  
+
   if (left >= 0) {
     leftTop.setLabelVisible(true);
     leftBot.setLabelVisible(false);
@@ -106,15 +106,19 @@ void draw() {
     rightTop.setValue(0);
     rightBot.setValue(right);
   }
-  
-  
+
+
   String output = nfs(left, 3) + nfs(right, 3) +"\n";
   //println(output);
 
   if (serial != null) {
     serial.write(output);
   }
+
   setGUI();
+
+  fill(255);
+  text(mouseX + ", " + mouseY, 10, height - 10);
 }
 
 void keyPressed() {
