@@ -10,20 +10,10 @@ Adafruit_DCMotor *leftMotor = AFMS.getMotor(4);
 BluetoothSerial SerialBT;
 
 void setup() {
-  // put your setup code here, to run once:
   SerialBT.begin("Tiger");
-  Serial.begin(250000);
+  //Serial.begin(250000);
 
   AFMS.begin();
-
-//  rightMotor->setSpeed(150);
-//  rightMotor->run(FORWARD);
-//  rightMotor->run(RELEASE);
-//  leftMotor->setSpeed(150);
-//  leftMotor->run(FORWARD);
-//  leftMotor->run(RELEASE);
-  // turn on motor
-
 }
 
 String received = "";
